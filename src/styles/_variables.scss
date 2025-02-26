@@ -1,0 +1,48 @@
+// Colors
+$color-white: #FFFFFF;
+$color-name-header: #474747;
+
+$color-border: #EBEBEB;
+
+$color-header-primary: #222222;
+$color-table-name: #474747;
+$color-table-text: #5C5C5C;
+$color-table-label: #999999;
+$color-text-placeholder: #D1D1D1;
+$color-text-placeholder-active: #474747;
+
+$color-success: #1BDA9D;   
+$color-warning: #FF8346; 
+$color-error: #FE4848;     
+$color-draft: #5C5C5C;    
+$color-button-primary: #2EE5AC;
+$color-button-secondary: #7D7D7D;
+
+$color-line-red: #E14165;
+$color-line-purple: #8686FF;
+$color-line-light-purple: #C2C2FF;
+
+//Font
+$font-family: "Roboto", serif;
+$font-family-secondary: "Montserrat", serif;
+$font-family-option: "Nunito", serif;
+$font-size-base: 12px;
+$font-size-lg: 26px; 
+$font-size-md: 14px;  
+$font-size-sm: 13px;  
+$font-size-xs: 11px;  
+
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Colors status 
+$status-colors: (
+  online: $color-success,
+  paused: $color-warning,
+  stopped: $color-error,
+  draft: $color-draft
+);
+
+$shadow-hover-card: 0 0 20px 0 rgba(0, 0, 0, 0.15)
