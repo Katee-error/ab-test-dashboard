@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ResultsProps {
   className?: string;
@@ -6,6 +6,9 @@ interface ResultsProps {
 
 export const Results: React.FC<ResultsProps> = ({ className }) => {
   return (
-    <div className={className}></div>
+    <>
+      <h1>Results</h1>
+      <h2>Order basket redesing</h2>
+    </>
   );
 };

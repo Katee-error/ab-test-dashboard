@@ -1,14 +1,10 @@
-import { AppRoutes } from '../routes/AppRoutes'
+import { AppRoutes } from "../routes/AppRoutes";
+import { Container } from "./container/Container";
 
 export const Layout = () => {
-
   return (
-    <div> 
-    {/* <Header/> */}
-      <div>
-      <AppRoutes/> 
-      </div>
-    </div>
-  )
-}
-
+    <Container>
+        <AppRoutes />
+    </Container>
+  );
+};

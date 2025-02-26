@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface FinalizeProps {
   className?: string;
@@ -6,6 +6,9 @@ interface FinalizeProps {
 
 export const Finalize: React.FC<FinalizeProps> = ({ className }) => {
   return (
-    <div className={className}></div>
+    <>
+      <h1>Finalize</h1>
+      <h2>Spring promotion</h2>
+    </>
   );
 };

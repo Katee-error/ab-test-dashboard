@@ -1,0 +1,43 @@
+@import './../../styles/variables';
+
+.filterWrapper {
+  position: relative;
+  width: 100%;
+  margin: 40px 0 30px;
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    transform: translateY(-50%);
+    width: 13px;
+    height: 14px;
+    pointer-events: none;
+  }
+
+  .input {
+    width: 100%;
+    height: 45px;
+    padding: 0 37px;
+    font-size: $font-size-md;
+    border: 1px solid $color-border;
+    border-radius: 15px;
+    color: $color-text-placeholder-active;
+    background-color: $color-white;
+   
+    &::placeholder {
+      color: $color-text-placeholder;
+      font-size: $font-size-md;
+      font-weight: $font-weight-regular;
+    }
+  }
+
+  .count {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: $font-size-md;
+    color: $color-text-placeholder;
+  }
+}
