@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface UseKeyboardNavigationProps {
   itemsLength: number;
@@ -11,7 +10,6 @@ export const useKeyboardNavigation = ({
   onEnterPress,
 }: UseKeyboardNavigationProps) => {
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (itemsLength === 0) return;
@@ -30,8 +28,7 @@ export const useKeyboardNavigation = ({
           }
           break;
         case "Escape":
-          setCurrentIndex(null);
-          navigate("/");
+          setCurrentIndex(null); 
           break;
         default:
           break;
@@ -42,7 +39,7 @@ export const useKeyboardNavigation = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [itemsLength, currentIndex, onEnterPress, navigate]);
+  }, [itemsLength, currentIndex, onEnterPress]);
 
   return { currentIndex };
 };

@@ -1,66 +1,24 @@
-import { useCallback, useEffect, useState } from "react";
-import { Filter } from "../../components/filter/Filter";
-import { getSites, getTests } from "../../api/api";
 import { useNavigate } from "react-router-dom";
-import { Site, Test } from "../../types/types";
+import { useDashboardData } from "../../hooks/useDashboardData";
+import { useFilter } from "../../hooks/useFilter";
+import { Filter } from "../../components/filter/Filter";
 import { Table } from "../../components/table/Table";
 
+
 export const Dashboard = () => {
-  const [tests, setTests] = useState<Test[]>([]);
-  const [sites, setSites] = useState<Site[]>([]);
-  const [filteredTests, setFilteredTests] = useState<Test[]>([]);
-  const [filterValue, setFilterValue] = useState("");
+  const { tests, sites, error } = useDashboardData();
+  const { filterValue, filteredTests, handleFilterChange, handleReset } = useFilter(tests);
   const navigate = useNavigate();
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    const loadData = async () => {
-      const [testsData, sitesData] = await Promise.all([getTests(), getSites()]);
+  const handleResultsClick = (testId: string) => {
+    navigate(`/results/${testId}`);
+  };
 
-      setTests(testsData || []);
-      setFilteredTests(testsData || []);
-      setSites(sitesData || []);
-    };
+  const handleFinalizeClick = (testId: string) => {
+    navigate(`/finalize/${testId}`);
+  };
 
-    loadData();
-  }, []);
-
-  const handleFilterChange = useCallback(
-    (value: string) => {
-      setFilterValue(value);
-
-      const trimmedTerm = value.trim().toLowerCase();
-
-      if (trimmedTerm) {
-        const filtered = tests.filter((test) =>
-          test.name.toLowerCase().includes(trimmedTerm)
-        );
-        setFilteredTests(filtered);
-      } else {
-        setFilteredTests(tests);
-      }
-    },
-    [tests]
-  );
-
-  const handleReset = useCallback(() => {
-    setFilterValue(""); 
-    setFilteredTests(tests);
-  }, [tests]);
-
-  const handleResultsClick = useCallback(
-    (testId: string) => {
-      navigate(`/results/${testId}`);
-    },
-    [navigate]
-  );
-
-  const handleFinalizeClick = useCallback(
-    (testId: string) => {
-      navigate(`/finalize/${testId}`);
-    },
-    [navigate]
-  );
+  if (error) return <p>{error}</p>;
 
   return (
     <>
@@ -73,7 +31,6 @@ export const Dashboard = () => {
       <Table
         tests={filteredTests}
         sites={sites}
-        selectedIndex={selectedIndex}
         onResultsClick={handleResultsClick}
         onFinalizeClick={handleFinalizeClick}
         onReset={handleReset}
