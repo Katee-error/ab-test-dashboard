@@ -1,7 +1,7 @@
 
 export type Status = 'Online' | 'Paused' | 'Stopped' | 'Draft'
 export interface Test {
-    id: string;
+    id: number;
     name: string;
     type: 'Classic' | 'MVT' | 'Server-side';
     status: Status;
