@@ -1,0 +1,182 @@
+@import "../../styles/variables";
+
+.tableContainer {
+  position: relative;
+}
+
+.table {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.resetButton {
+  padding: 8px 12px;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-table-label;
+  cursor: pointer;
+  border-radius: 5px;
+
+  &:hover {
+   color: $color-line-red;
+  }
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 3fr 1.5fr 1.5fr 2fr 1fr;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  color: $color-table-label;
+  text-transform: uppercase;
+  cursor: pointer;
+
+}
+
+.header div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.sortableHeader {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+}
+
+.sortIcon {
+  transition: transform 0.2s ease-in-out, fill 0.2s;
+  width: 10px;
+  height: 10px;
+}
+
+.desc {
+  transform: rotate(180deg);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 3fr 1.5fr 1.5fr 2fr 1fr;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 3px;
+  height: 70px;
+  padding: 0 12px;
+  background-color: $color-white;
+
+  &:hover {
+    box-shadow: $shadow-hover-card;
+  }
+
+  &.bodyRow {
+    position: relative;
+  }
+}
+
+.cell {
+  font-size: $font-size-base;
+  color: $color-table-text;
+  font-weight: $font-weight-regular;
+}
+
+.testName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-table-name;
+}
+
+.siteMarker {
+  width: 4px;
+  height: 100%;
+  border-radius: 3px 0 0 3px;
+  background-color: $color-border;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.market {
+  background-color: $color-line-red;
+}
+
+.delivery {
+  background-color: $color-line-light-purple;
+}
+
+.games {
+  background-color: $color-line-purple;
+}
+
+.status {
+  font-weight: $font-weight-semibold;
+}
+
+.online {
+  color: $color-success;
+}
+.paused {
+  color: $color-warning;
+}
+.stopped {
+  color: $color-error;
+}
+.draft {
+  color: $color-draft;
+}
+
+.resultsButton,
+.finalizeButton {
+  padding: 0 25px;
+  height: 30px;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  font-family: $font-family-secondary;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.resultsButton {
+  background-color: $color-button-primary;
+  color: $color-white;
+}
+
+.finalizeButton {
+  background-color: $color-button-secondary;
+  color: $color-white;
+  font-weight: $font-weight-medium;
+}
+
+.noResultsContainer {
+  font-family: $font-family-secondary;
+  font-weight: 500;
+  font-size: 18px;
+  color: $color-header-primary;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 30px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}

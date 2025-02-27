@@ -1,0 +1,29 @@
+@import "../styles/variables";
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.navigation {
+  position: absolute;
+  bottom: 20px;
+  transform: translateX(-50%);
+}
+
+.backButton {
+  font-family: $font-family-option;
+  font-weight: $font-weight-bold;
+  font-size: 18px;
+  color: $color-header-primary;
+
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+}
+
+.backButton:hover {
+  color: $color-table-text;
+}

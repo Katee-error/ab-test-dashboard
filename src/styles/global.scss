@@ -3,5 +3,20 @@
 @import "./_variables.scss";
 
 body {
-    background-color: #FAFAFA;
+  background-color: #fafafa;
+  font-family: $font-family;
+}
+
+h1 {
+  font-family: $font-family-secondary;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-lg;
+  color: $color-header-primary;
+}
+
+h2 {
+  font-family: $font-family-secondary;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-md;
+  color: $color-header-primary;
 }

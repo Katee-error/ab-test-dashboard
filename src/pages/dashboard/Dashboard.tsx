@@ -1,52 +1,81 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Filter } from "../../components/filter/Filter";
-import { fetchTests } from "../../api/axios";
-import { useDebounce } from "../../hooks/useDebounce";
+import { getSites, getTests } from "../../api/api";
+import { useNavigate } from "react-router-dom";
+import { Site, Test } from "../../types/types";
+import { Table } from "../../components/table/Table";
 
-interface DashboardProps {
-  className?: string;
-}
-
-export const Dashboard: React.FC<DashboardProps> = ({ className }) => {
-  const [tests, setTests] = useState([]);
-  const [filteredTests, setFilteredTests] = useState([]);
-  const [filterValue, setFilterValue] = useState('');
-  const debouncedFilter = useDebounce(filterValue, 400);
+export const Dashboard = () => {
+  const [tests, setTests] = useState<Test[]>([]);
+  const [sites, setSites] = useState<Site[]>([]);
+  const [filteredTests, setFilteredTests] = useState<Test[]>([]);
+  const [filterValue, setFilterValue] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const loadTests = async () => {
-      try {
-        const data = await fetchTests();
-        setTests(data);
-        setFilteredTests(data); // Изначально показываем все тесты
-      } catch (error) {
-        console.error('Failed to fetch tests:', error);
-      }
+    const loadData = async () => {
+      const [testsData, sitesData] = await Promise.all([getTests(), getSites()]);
+
+      setTests(testsData || []);
+      setFilteredTests(testsData || []);
+      setSites(sitesData || []);
     };
 
-    loadTests();
+    loadData();
   }, []);
 
-  useEffect(() => {
-    const trimmedTerm = debouncedFilter.trim().toLowerCase();
+  const handleFilterChange = useCallback(
+    (value: string) => {
+      setFilterValue(value);
 
-    if (trimmedTerm) {
-      const filtered = tests.filter((test: any) =>
-        test.name.toLowerCase().includes(trimmedTerm)
-      );
-      setFilteredTests(filtered);
-    } else {
-      setFilteredTests(tests); // Сброс фильтра при пустом вводе
-    }
-  }, [debouncedFilter, tests]);
+      const trimmedTerm = value.trim().toLowerCase();
 
+      if (trimmedTerm) {
+        const filtered = tests.filter((test) =>
+          test.name.toLowerCase().includes(trimmedTerm)
+        );
+        setFilteredTests(filtered);
+      } else {
+        setFilteredTests(tests);
+      }
+    },
+    [tests]
+  );
+
+  const handleReset = useCallback(() => {
+    setFilterValue(""); 
+    setFilteredTests(tests);
+  }, [tests]);
+
+  const handleResultsClick = useCallback(
+    (testId: string) => {
+      navigate(`/results/${testId}`);
+    },
+    [navigate]
+  );
+
+  const handleFinalizeClick = useCallback(
+    (testId: string) => {
+      navigate(`/finalize/${testId}`);
+    },
+    [navigate]
+  );
 
   return (
     <>
       <h1>Dashboard</h1>
-      <Filter value={filterValue} // Передаём обязательное value
-        onChange={setFilterValue} // Управляемое состояние
-        totalTests={filteredTests.length} />
+      <Filter
+        value={filterValue}
+        onChange={handleFilterChange}
+        totalTests={filteredTests.length}
+      />
+      <Table
+        tests={filteredTests}
+        sites={sites}
+        onResultsClick={handleResultsClick}
+        onFinalizeClick={handleFinalizeClick}
+        onReset={handleReset}
+      />
     </>
   );
 };
