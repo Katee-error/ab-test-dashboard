@@ -72,12 +72,7 @@ export const Table: FC<TableProps> = ({
 
   const { currentIndex } = useKeyboardNavigation({
     itemsLength: tests.length,
-    onEnterPress: (index) => onResultsClick(tests[index].id.toString()),
-    onFinalizePress: (index) => {
-      if (tests[index].status.toLowerCase() === "draft") {
-        onFinalizeClick(tests[index].id.toString());
-      }
-    },
+    onEnterPress: (index) => onResultsClick(tests[index]?.id.toString()),
   });
   
   return (
