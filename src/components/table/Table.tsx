@@ -2,10 +2,12 @@ import { FC, useState, useEffect } from "react";
 import styles from "./Table.module.scss";
 import classNames from "classnames";
 import { Test, Site } from "../../types/types";
+import { useKeyboardNavigation } from "../../hooks/useKeyboardNavigation";
 
 interface TableProps {
   tests: Test[];
   sites: Site[];
+  selectedIndex: number | null;
   onResultsClick: (testId: string) => void;
   onFinalizeClick: (testId: string) => void;
   onReset: () => void;
@@ -31,6 +33,7 @@ const getSiteMarkerClass = (siteId: number) => {
 export const Table: FC<TableProps> = ({
   tests,
   sites,
+  selectedIndex,
   onResultsClick,
   onFinalizeClick,
   onReset,
@@ -67,6 +70,16 @@ export const Table: FC<TableProps> = ({
     setSortDirection("asc");
   };
 
+  const { currentIndex } = useKeyboardNavigation({
+    itemsLength: tests.length,
+    onEnterPress: (index) => onResultsClick(tests[index].id.toString()),
+    onFinalizePress: (index) => {
+      if (tests[index].status.toLowerCase() === "draft") {
+        onFinalizeClick(tests[index].id.toString());
+      }
+    },
+  });
+  
   return (
     <>
 
@@ -97,10 +110,12 @@ export const Table: FC<TableProps> = ({
         </button></div>
           </div>
 
-          {sortedTests.map((test) => {
+          {sortedTests.map((test, index) => {
             const siteUrl = getSiteById(test.siteId, sites);
             return (
-              <div key={test.id} className={classNames(styles.row, styles.bodyRow)}>
+              <div key={test.id} className={classNames(styles.row, styles.bodyRow, {
+                [styles.selected]: index === currentIndex,
+              })}>
                 <div className={styles.testName}>
                   <div className={getSiteMarkerClass(test.siteId)}></div>
                   {test.name}

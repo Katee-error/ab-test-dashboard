@@ -11,6 +11,7 @@ export const Dashboard = () => {
   const [filteredTests, setFilteredTests] = useState<Test[]>([]);
   const [filterValue, setFilterValue] = useState("");
   const navigate = useNavigate();
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -72,6 +73,7 @@ export const Dashboard = () => {
       <Table
         tests={filteredTests}
         sites={sites}
+        selectedIndex={selectedIndex}
         onResultsClick={handleResultsClick}
         onFinalizeClick={handleFinalizeClick}
         onReset={handleReset}

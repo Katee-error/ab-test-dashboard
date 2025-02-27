@@ -1,5 +1,5 @@
 import { AppRoutes } from "../routes/AppRoutes";
-import { Container } from "./container/Container";
+import { Container } from "../components/container/Container";
 
 export const Layout = () => {
   return (
