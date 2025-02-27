@@ -1,19 +1,19 @@
 import { useState, useCallback, useEffect } from "react";
 import { Test } from "../types/types";
 
-export const useFilter = (tests: Test[]) => {
-  const [filterValue, setFilterValue] = useState("");
-  const [filteredTests, setFilteredTests] = useState<Test[]>([]); 
+export const useSearch = (tests: Test[]) => {
+  const [searchValue, setSearchedValue] = useState("");
+  const [searchedTests, setSearchedTests] = useState<Test[]>([]); 
 
   useEffect(() => {
-    setFilteredTests(tests); 
+    setSearchedTests(tests); 
   }, [tests]);
 
   const handleFilterChange = useCallback(
     (value: string) => {
-      setFilterValue(value);
+      setSearchedValue(value);
       const trimmedTerm = value.trim().toLowerCase();
-      setFilteredTests(
+      setSearchedTests(
         trimmedTerm
           ? tests.filter((test) => test.name.toLowerCase().includes(trimmedTerm))
           : tests
@@ -23,9 +23,11 @@ export const useFilter = (tests: Test[]) => {
   );
 
   const handleReset = useCallback(() => {
-    setFilterValue("");
-    setFilteredTests(tests);
+    setSearchedValue("");
+    setSearchedTests(tests);
   }, [tests]);
 
-  return { filterValue, filteredTests, handleFilterChange, handleReset };
+  return { searchValue, searchedTests, handleFilterChange, handleReset };
 };
+
+

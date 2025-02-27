@@ -1,4 +1,4 @@
-import styles from './Filter.module.scss';
+import styles from './Search.module.scss';
 import classNames from 'classnames';
 import searchIcon from './../../assets/icons/search-icon.svg';
 

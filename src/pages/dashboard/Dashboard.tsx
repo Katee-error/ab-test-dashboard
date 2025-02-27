@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useDashboardData } from "../../hooks/useDashboardData";
-import { useFilter } from "../../hooks/useFilter";
-import { Filter } from "../../components/filter/Filter";
+import { useSearch } from "../../hooks/useSearch";
+import { Filter } from "../../components/search/Search";
 import { Table } from "../../components/table/Table";
 
 
 export const Dashboard = () => {
   const { tests, sites, error } = useDashboardData();
-  const { filterValue, filteredTests, handleFilterChange, handleReset } = useFilter(tests);
+  const { searchValue, searchedTests, handleFilterChange, handleReset } = useSearch(tests);
   const navigate = useNavigate();
 
   const handleResultsClick = (testId: string) => {
@@ -24,12 +24,12 @@ export const Dashboard = () => {
     <>
       <h1>Dashboard</h1>
       <Filter
-        value={filterValue}
+        value={searchValue}
         onChange={handleFilterChange}
-        totalTests={filteredTests.length}
+        totalTests={searchedTests.length}
       />
       <Table
-        tests={filteredTests}
+        tests={searchedTests}
         sites={sites}
         onResultsClick={handleResultsClick}
         onFinalizeClick={handleFinalizeClick}

@@ -1,45 +1,41 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Test, Site } from "../types/types";
 import { getSiteById, formatSite } from "../utils/siteUtils";
 
-export const useSorting = (tests: Test[], sites: Site[]) => {
-  const [sortedTests, setSortedTests] = useState<Test[]>([]); 
-  const [sortColumn, setSortColumn] = useState<string | null>("name");
+export const useSorting = (filteredTests: Test[], sites: Site[]) => {
+  const [sortColumn, setSortColumn] = useState<"name" | "type" | "site" | "status" | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
-  useEffect(() => {
-    setSortedTests(tests);
-  }, [tests]);
+  
+  const sortedTests = useMemo(() => {
+    if (!sortColumn) return filteredTests; 
 
-  const handleSort = (column: "name" | "type" | "site" | "status") => {
-    const direction =
-      sortColumn === column && sortDirection === "asc" ? "desc" : "asc";
+    return [...filteredTests].sort((a, b) => {
+      const aValue = sortColumn === "site"
+        ? formatSite(getSiteById(a.siteId, sites))
+        : a[sortColumn].toLowerCase();
 
-    const sorted = [...tests].sort((a, b) => {
-      const aValue =
-        column === "site"
-          ? formatSite(getSiteById(a.siteId, sites))
-          : a[column].toLowerCase();
-      const bValue =
-        column === "site"
-          ? formatSite(getSiteById(b.siteId, sites))
-          : b[column].toLowerCase();
+      const bValue = sortColumn === "site"
+        ? formatSite(getSiteById(b.siteId, sites))
+        : b[sortColumn].toLowerCase();
 
-      return direction === "asc"
+      return sortDirection === "asc"
         ? aValue.localeCompare(bValue)
         : bValue.localeCompare(aValue);
     });
+  }, [filteredTests, sortColumn, sortDirection, sites]); 
 
-    setSortedTests(sorted);
+  const handleSort = (column: "name" | "type" | "site" | "status") => {
     setSortColumn(column);
-    setSortDirection(direction);
+    setSortDirection(prevDirection => (sortColumn === column && prevDirection === "asc" ? "desc" : "asc"));
   };
 
   const resetSorting = () => {
-    setSortedTests(tests);
-    setSortColumn("name");
+    setSortColumn(null); 
     setSortDirection("asc");
   };
 
   return { sortedTests, sortColumn, sortDirection, handleSort, resetSorting };
 };
+
+
